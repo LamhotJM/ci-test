@@ -36,7 +36,7 @@ class TestGoogleGhostDriver(unittest.TestCase):
         self.driver.find_element_by_name("RecoveryEmailAddress").send_keys("test@gmail.com")
         # Click submit button
         self.driver.find_element_by_name("submitbutton").click()
-        print("current_url is now '%s'" % (self.driver.current_url))
+        print("Current page '%s'" % (self.driver.current_url))
 
     def tearDown(self):
         self.driver.quit()
