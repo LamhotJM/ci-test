@@ -5,7 +5,7 @@ from selenium import webdriver
 class TestGoogleGhostDriver(unittest.TestCase):
     def setUp(self):
         # The phantomjs executable is assumed to be in your PATH:
-        self.driver = webdriver.PhantomJS('phantomjs')
+        self.driver = webdriver.Chrome()
         #self.driver = webdriver.Firefox()
 
     # Simple test that performs a google Signup
