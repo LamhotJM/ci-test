@@ -1,13 +1,15 @@
 import unittest
 from selenium import webdriver
-
+import StringIO
+from PIL import Image
 
 class TestGoogleGhostDriver(unittest.TestCase):
     def setUp(self):
         # The phantomjs executable is assumed to be in your PATH:
-        #self.driver = webdriver.PhantomJS('phantomjs')
+        self.driver = webdriver.PhantomJS('phantomjs')
+        self.driver.set_window_size(1366, 728)  # optional
         #self.driver = webdriver.Firefox()
-        self.driver = webdriver.Chrome()
+        #self.driver = webdriver.Chrome()
 
     # Simple test that performs a google Signup
     def testGoogleSearch(self):
@@ -38,6 +40,14 @@ class TestGoogleGhostDriver(unittest.TestCase):
         # Click submit button
         self.driver.find_element_by_name("submitbutton").click()
         print("Current page '%s'" % (self.driver.current_url))
+        self.driver.save_screenshot('google_form.png')
+        screen = self.driver.get_screenshot_as_png()
+
+        # Crop it back to the window size (it may be taller)
+        box = (0, 0, 1366, 728)
+        im = Image.open(StringIO.StringIO(screen))
+        region = im.crop(box)
+        region.save('screen_lores.jpg', 'JPEG', optimize=True, quality=95)
 
     def tearDown(self):
         self.driver.quit()
